@@ -3,10 +3,8 @@
 *.user
 *.ncb
 *.opensdf
-Prototype/Debug/
-Prototype/Release/
-tinyxml/obj/Debug/
-tinyxml/obj/Release/
+Prototype/obj/
+tinyxml/obj/
 ipch/
 Framework/Debug/
 Framework/Release
