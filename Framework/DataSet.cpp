@@ -1,6 +1,4 @@
 #include "DataSet.h"
-
-
 DefMgr gDefMgr;
 
 DefMgr::DefMgr() { }
@@ -159,9 +157,7 @@ Definition* DefMgr::getDefinition(const char* pname)
 
 	if(m_vDefs.size() == 0)
 	{
-		//Definition* defaultCase;
-		//return defaultCase;
-		return 0;
+		return NULL;
 	}
 	else if(m_vDefs.size() == 1)
 		return &m_vDefs.front();
@@ -186,8 +182,6 @@ void Definition::addDataSet(DataSet set)
 DataSet* Definition::findDataSet(const char *pname)
 {
 	DataSet temp(pname);
-
-	
 	return binarySearch(m_dataSets.begin(), m_dataSets.end(), temp);
 }
 

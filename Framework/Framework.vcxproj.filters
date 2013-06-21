@@ -21,9 +21,6 @@
     <ClCompile Include="GraphicsDevice.cpp">
       <Filter>Engine Core</Filter>
     </ClCompile>
-    <ClCompile Include="Physics_Core.cpp">
-      <Filter>Engine Core</Filter>
-    </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Engine Core</Filter>
     </ClCompile>
@@ -32,9 +29,6 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Engine Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>Engine Core\Header Files</Filter>
     </ClCompile>
     <ClCompile Include="GuiButton.cpp">
       <Filter>GUI</Filter>
@@ -54,8 +48,14 @@
     <ClCompile Include="GuiWindow.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GuiInput.cpp">
-      <Filter>GUI\Header Files</Filter>
+    <ClCompile Include="PhysicsCore.cpp">
+      <Filter>Engine Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Engine Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Engine Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +77,6 @@
     <ClInclude Include="Math.h">
       <Filter>Engine Core\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Physics_Core.h">
-      <Filter>Engine Core\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>Engine Core\Header Files</Filter>
     </ClInclude>
@@ -98,9 +95,6 @@
     <ClInclude Include="GuiComponent.h">
       <Filter>GUI\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GuiInput.h">
-      <Filter>GUI\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GuiMgr.h">
       <Filter>GUI\Header Files</Filter>
     </ClInclude>
@@ -115,6 +109,12 @@
     </ClInclude>
     <ClInclude Include="GuiWindow.h">
       <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsCore.h">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Engine Core\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

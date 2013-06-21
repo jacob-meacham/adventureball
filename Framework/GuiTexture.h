@@ -4,11 +4,8 @@
 #include <list>
 #include <string>
 #include <sstream>
-#include "GraphicsDevice.h"
-#include "Texture.h"
-#include "System.h"
-#include "Physics_Core.h"
 
+class Tile;
 /// All rendered objects extend from the Sprite base class.
 /** The Sprite class handles all rendering of any game object.  This includes
 	animations, scale, and position.
@@ -42,10 +39,10 @@ class GuiTexture {
 		bool UseTiles(Tile *Tiles, char TextureNum); 
 
 		// Returns the tile set used by this Sprite.
-		Tile* GetTiles();
+		Tile* GetTiles() const;
 
 		// Returns the texture number used by this sprite.
-		char GetTextureNum();
+		char GetTextureNum() const;
 
 		// Creates a renderable sprite.
 		void Create(char TileNum, int x, int y, int width, int height);
@@ -54,7 +51,7 @@ class GuiTexture {
 		void Resize(int x,int y,int width,int height); 
 
 		// Renders the sprite.
-		bool Render();
+		bool Render() const;
 		
 		// Setters.
 		void SetXScale(float Scale);
@@ -65,12 +62,12 @@ class GuiTexture {
 		void Translate(int x, int y);
 
 		// Getters.		
-		long GetXPos();
-		long GetYPos();
-		long GetWidth();
-		long GetHeight();
-		float GetXScale();
-		float GetYScale();
+		long GetXPos() const;
+		long GetYPos() const;
+		long GetWidth() const;
+		long GetHeight() const;
+		float GetXScale() const;
+		float GetYScale() const;
 
-		bool GetIsVisible();
+		bool GetIsVisible() const;
 };

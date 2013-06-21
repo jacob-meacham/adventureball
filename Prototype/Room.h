@@ -1,8 +1,9 @@
 #pragma once
 
 #include <vector>
+#include "Framework\Define.h"
 #include "Wall.h"
-#include "..\Framework\Define.h"
+
 class Tile;
 class Corridor;
 
@@ -35,11 +36,11 @@ class Room {
 
 		void AddCorridor(Corridor* corridor);
 		
-		bool CheckCollisions(float radius, POINT p);
+		bool CheckCollisions(float radius, const POINT & p);
 		virtual void Update();
-		virtual void Render(bool full = true);
+		virtual void Render(bool full = true) const;
 
-		float LengthBetween(float x, float y); //Returns length between point and center of room.
+		float LengthBetween(float x, float y) const; //Returns length between point and center of room.
 		
 		// Setters
 		void SetRotationCenterX(float x);
@@ -48,13 +49,13 @@ class Room {
 		void SetSideAsDoor(int sideNum, Items key);
 
 		// Getters
-		int GetNumSides();
+		int GetNumSides() const;
 		Wall* GetSide(int sideNumber);
-		int GetSideLength();
-		float GetRadius();
-		float GetCenterX();
-		float GetCenterY();
-		float GetCurX();
-		float GetCurY();
-		int GetRoomNumber();
+		int GetSideLength() const;
+		float GetRadius() const;
+		float GetCenterX() const;
+		float GetCenterY() const;
+		float GetCurX() const;
+		float GetCurY() const;
+		int GetRoomNumber() const;
 };

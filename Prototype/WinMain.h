@@ -3,24 +3,12 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include "Framework\DXUtil.h"
-#include "Framework\GraphicsDevice.h"
-#include "Framework\System.h"
-#include "Level.h"
-#include "Framework\Sprite.h"
 #include "Framework\Define.h"
-#include "Framework\Physics_Core.h"
-#include "Parser\tinyxml\ticpp.h"
-#include "Parser\tinyxml\tinyxml.h"
-#include "Wall.h"
-
-#include "Framework\GuiMgr.h"
-#include "Framework\GuiScreen.h"
-#include "Framework\GuiWindow.h"
-#include "Framework\GuiStatic.h"
-#include "Framework\GuiButton.h"
-
-Player player;
+#include "Framework\System.h"
+#include "Framework\Texture.h"
+#include "Framework\Font.h"
+#include "Framework\Input.h"
+#include "Ball.h"
 
 class Prototype : public System
 {
@@ -36,20 +24,15 @@ class Prototype : public System
 		Ball			m_Ball;
 		int				m_fps;
 		bool			m_printfps;
-		std::stringstream s;
+		std::stringstream fpsString;
 
-		GuiScreen*   m_pScreen;
-		GuiWindow*   m_pWindow;
-		GuiWindow*	 m_pSecondWindow;
-		GuiWindow*   m_pInnerWindow;
-		GuiStatic*	 m_pStatic;
-		GuiButton*	 m_RegularButton;
-		GuiButton*	 m_BigButton;
-		GuiButton*	 m_LockedButton;
+		Input			m_Keyboard;
+		Input			m_Mouse;
 
 		virtual void onProcess();
 		virtual void shutdown();
 
+		void initGui();
 		bool processInput();
 
 	public:

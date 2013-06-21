@@ -6,14 +6,13 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include "..\Parser\tinyxml\ticpp.h"
-#include "..\Parser\tinyxml\tinyxml.h"
+#include "Parser\tinyxml\ticpp.h"
+#include "Parser\tinyxml\tinyxml.h"
 
 enum DataFlags
 {
 	ds_Named = 0,
 };
-
 
 enum DataEntryType
 {
@@ -21,7 +20,6 @@ enum DataEntryType
 	_int,
 	_string
 };
-
 
 struct DataEntry
 {
@@ -46,10 +44,7 @@ struct DataEntry
 	{
 		return this->id == rhs.id;
 	}
-
-
 };
-
 
 class DataSet
 {
@@ -110,9 +105,8 @@ class Definition
 		void addDataSet(DataSet set);
 		DataSet* findDataSet(const char* pname);
 
-		void setName(std::string s) { m_name = s; }
+		void setName(const std::string & s) { m_name = s; }
 		std::string getName() { return m_name; }
-
 
 		void release();
 
@@ -128,7 +122,7 @@ class Definition
 };
 
 extern class DefMgr gDefMgr;
-class DefMgr 
+class DefMgr
 {
 	friend class Definition;
 	protected:
@@ -146,12 +140,3 @@ class DefMgr
 		// Load multiple definitions.
 		void loadBundle(const char* pbundle);
 };
-
-
-
-
-
-
-
-
-	

@@ -7,16 +7,18 @@
 \return true if we are colliding */
 template <class T>
 bool BaseLayer<T>::BoundingSphereCollision(PhysicalEntity* entity1, PhysicalEntity* entity2);
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Base Constructor
 StaticLayer::StaticLayer() {
 	SetName("Static");
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Test if another sprite has collided with a Wall.
 void StaticLayer::InterTest(BaseLayer<Sprite>* other) { 
 	// Only tests sprites, not static sprites.
-	if(other->GetName().compare("StaticSprite") == 0) { return; }
+	if(other->GetName().compare("StaticSprite") == 0) 
+		return;
+
 	if(other->GetName().compare("Sprite") == 0) {
 		std::list<Wall*>::iterator iWall;
 		std::list<Sprite*>::iterator iSprite;
@@ -29,9 +31,8 @@ void StaticLayer::InterTest(BaseLayer<Sprite>* other) {
 			}
 		}
 	}
-	else { return; }
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Performs a circle/line collision test, and bounces other if there is a collision.
 bool StaticLayer::WallCollision(Wall* wall, PhysicalEntity* other) { 
 	BoundingSphere p = *(other->GetBoundingSphere());
@@ -86,19 +87,21 @@ bool StaticLayer::WallCollision(Wall* wall, PhysicalEntity* other) {
 
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Does nothing (static layer).
-void StaticLayer::IntraTest() { return; }
-
+void StaticLayer::IntraTest() { }
+//////////////////////////////////////////////////////////////////////////////////
 /// Default constructor.
 SpriteLayer::SpriteLayer() {
 	SetStatic(false);
 	SetName("Sprite");
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Tests this sprite layer against another sprite layer, using a bounding sphere collision.
 void SpriteLayer::InterTest(BaseLayer<Sprite>* other) {
-	if(other->GetName().compare("Static") == 0) { return; }
+	if(other->GetName().compare("Static") == 0) 
+		return;
+
 	if(other->GetName().compare("Sprite") == 0) {
 		std::list<Sprite*>::iterator iSprite;
 		std::list<Sprite*>::iterator iOther;
@@ -112,10 +115,12 @@ void SpriteLayer::InterTest(BaseLayer<Sprite>* other) {
 		}
 	}
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Test each sprite in this layer against every other.
 void SpriteLayer::IntraTest() {
-	if(m_members.size() <= 1) { return; }
+	if(m_members.size() <= 1)
+		return;
+
 	std::list<Sprite*>::iterator i1 = m_members.begin();
 	std::list<Sprite*>::iterator i2 = i1;
 	i2++;
@@ -126,16 +131,14 @@ void SpriteLayer::IntraTest() {
 		}
 	}
 }
+//////////////////////////////////////////////////////////////////////////////////
 /// Default constructor.
 CollisionManager::CollisionManager() { }
-
-/// Sets the parent Level of this CM.
-//void CollisionManager::SetParent(Level *p) { m_parent = p; }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Registers a physical entity into the layer 'layerName'.
 /** Layer names are: Sprite, Wall, Exit.
 */
-bool CollisionManager::RegisterEntity(std::string layerName, PhysicalEntity* entity) {
+bool CollisionManager::RegisterEntity(const std::string & layerName, PhysicalEntity* entity) {
 	if(layerName.compare("Sprite") == 0) {
 		m_Sprites.RegisterEntity((Sprite*)entity);
 		return true;
@@ -146,7 +149,7 @@ bool CollisionManager::RegisterEntity(std::string layerName, PhysicalEntity* ent
 	}
 	else { return false; }
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 ///Figures out what rooms are occupied by Sprites and
 void CollisionManager::MakeRoomsActive() {
 	//Clear all the walls from collision detector so we only add the ones we need.
@@ -163,9 +166,9 @@ void CollisionManager::MakeRoomsActive() {
 	else { return; }
 
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Frees the specified layer (does not destroy objects)
-bool CollisionManager::FreeLayer(std::string layerName) {
+bool CollisionManager::FreeLayer(const std::string & layerName) {
 	if(layerName.compare("Sprite") == 0) {
 		m_Sprites.FreeLayer();
 		return true;
@@ -176,10 +179,10 @@ bool CollisionManager::FreeLayer(std::string layerName) {
 	}
 	else { return false; }
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Finds all collisions in the managed layers, and takes care of them.
 void CollisionManager::FindAndResolveCollisions() {
-	// Clear out all walls form the collision manager
+	// Clear out all walls from the collision manager
 	FreeLayer("Wall");
 
 	// Put the appropriate walls in the collision detector

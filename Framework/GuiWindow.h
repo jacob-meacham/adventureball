@@ -18,8 +18,7 @@ public:
 	void setGraphics(int titleBarTN, int backgroundTN);
 
 	virtual int  HandleEvent(int type);
-	virtual void Render();
+	virtual void Render() const;
 	virtual void setPos(int x, int y);
-	//virtual void Move(float x, float y);
-	virtual void getUsableRect(RECT &rect);
+	virtual void getUsableRect(RECT &rect) const;
 };

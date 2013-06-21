@@ -34,11 +34,4 @@ static void createRect(u32 ux, u32 uy, u32 lx, u32 ly, RECT * prect)
 	prect->right = lx;
 	prect->bottom = ly;
 }
-//////////////////////////////////////////////////////////////////////////////////
-/*
-static void createRect(Vector2 ul, Vector2 lr, RECT * prect)
-{
-	createRect((u32)ul.x, (u32)ul.y, (u32)lr.x, (u32)lr.y, prect);
-}
-*/
 #endif

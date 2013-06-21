@@ -23,9 +23,6 @@
     <ClCompile Include="Level.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Room.cpp">
       <Filter>Game</Filter>
     </ClCompile>
@@ -49,13 +46,7 @@
     <ClInclude Include="Level.h">
       <Filter>Game\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Room.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector.h">
       <Filter>Game\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">

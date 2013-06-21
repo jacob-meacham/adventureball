@@ -36,8 +36,8 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">obj\$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">lib\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">obj\$(Configuration)\</IntDir>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">FrameworkD</TargetName>
@@ -57,7 +57,8 @@
   <ItemGroup>
     <ClCompile Include="DataSet.cpp" />
     <ClCompile Include="GraphicsDevice.cpp" />
-    <ClCompile Include="Physics_Core.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="PhysicsCore.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -68,7 +69,6 @@
     <ClCompile Include="GuiStatic.cpp" />
     <ClCompile Include="GuiTexture.cpp" />
     <ClCompile Include="GuiWindow.cpp" />
-    <ClCompile Include="GuiInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataSet.h" />
@@ -76,15 +76,15 @@
     <ClInclude Include="DXUtil.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GraphicsDevice.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Math.h" />
-    <ClInclude Include="Physics_Core.h" />
+    <ClInclude Include="PhysicsCore.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="GuiButton.h" />
     <ClInclude Include="GuiCommon.h" />
     <ClInclude Include="GuiComponent.h" />
-    <ClInclude Include="GuiInput.h" />
     <ClInclude Include="GuiMgr.h" />
     <ClInclude Include="GuiScreen.h" />
     <ClInclude Include="GuiStatic.h" />

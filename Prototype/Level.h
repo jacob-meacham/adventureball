@@ -1,10 +1,10 @@
 #pragma once
 
 #include <list>
+#include "Framework\Define.h"
+#include "CollisionManager.h"
 #include "Room.h"
 #include "Corridor.h"
-#include "..\Framework\Define.h"
-#include "CollisionManager.h"
 #include "Ball.h"
 
 class Tile;
@@ -50,11 +50,12 @@ class Level {
 		void ActivateRoomsWithSprite(Sprite* s);
 		
 		void UpdateLevel();
-		void RenderLevel();
+		void RenderLevel() const;
 
 		bool CheckCollisions(float radius, POINT p);
 		void ProcessCollisions();
 		
 		CollisionManager* GetCollisionManager() { return &m_CollisionManager; }
-		
+
+		Ball * getPlayer() { return m_ball; }
 };

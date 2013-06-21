@@ -1,7 +1,6 @@
 #pragma once
 
 #include <list>
-#include <windows.h>
 #include "Math.h"
 #include "Define.h"
 
@@ -36,23 +35,23 @@ class PhysicalEntity {
 		Vector2 m_Velocity;
 
 	public:
-		
+		PhysicalEntity();		
 		void SetXVel(float x);
 		void SetYVel(float y);
 		void SetXYVel(float x, float y);
-		float GetXVel();
-		float GetYVel();
-		void GetXYVel(float &x, float &y);
-		const BoundingSphere* GetBoundingSphere() { return &m_BoundingSphere; }
+		float GetXVel() const;
+		float GetYVel() const;
+		void GetXYVel(float &x, float &y) const;
+		const BoundingSphere* GetBoundingSphere() const { return &m_BoundingSphere; }
 		void UpdateBoundingSphere(Vector2 center) { m_BoundingSphere.center.x = center.x; m_BoundingSphere.center.y = center.y; }
 		virtual void Collide(PhysicalEntity* other) = 0;
 		void Move(float x, float y);
-		void SetName(std::string name);
+		void SetName(const std::string & name);
 		void SetIsInteractive(bool i);
-		bool GetIsInteractive();
-		std::string GetName();
+		bool GetIsInteractive() const;
+		const std::string & GetName() const;
 
-		virtual bool checkType(EntityType e); //Checks if this PhysicalEntity is of type e. Returns true if true.
+		virtual bool checkType(EntityType e) const; //Checks if this PhysicalEntity is of type e. Returns true if true.
 
 };
 

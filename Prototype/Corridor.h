@@ -18,8 +18,8 @@ class Corridor : public Wall {
 		Corridor();
 		Corridor(BOUNDINGLINE b1, BOUNDINGLINE b2, Wall* lowerExit, Wall* upperExit, Tile *tiles);
 		void SetCorridor(BOUNDINGLINE b1, BOUNDINGLINE b2, Wall* lowerExit, Wall* upperExit, Tile *tiles);
-		float GetLength();
+		float GetLength() const;
 		void RotateCorridor(float angle);
 		void TranslateCorridor(float x, float y);
-		void Render();
+		void Render() const;
 };

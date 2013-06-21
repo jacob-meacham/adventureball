@@ -1,4 +1,5 @@
 #include "Font.h"
+#include "GraphicsDevice.h"
 
 /// Creates the specified font.
 /** \param Graphics GraphicsCore object to attach the font.
@@ -40,13 +41,13 @@ bool Font::create(const char * pname, u32 size, bool bold, bool italic)
 	}
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Frees the Font object.
 void Font::free()
 {
 	DX_RELEASE(pFont);
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Prints Text to the screen in a textbox (not the class Textbox), using the font's properties.
 /** \param Text text to print.
 	\param XPos x-coordinate that represents the upper-left corner of the textbox.
@@ -64,14 +65,12 @@ void Font::free()
 	DT_TOP
 	\return TRUE if printing is successful.
 */
-
 bool Font::render(const char * ptext, u32 x, u32 y, u32 width, u32 height, Color color, DWORD Format)
 {
-	RECT Rect;
-
 	if(!pFont)
 		return false;
 
+	RECT Rect;
 	Rect.left   = x;
 	Rect.top    = y;
 	Rect.right  = Rect.left + width;

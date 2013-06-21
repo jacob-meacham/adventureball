@@ -1,9 +1,11 @@
 #include "GuiTexture.h"
 #include <iostream>
 #include <sstream>
+#include "Texture.h"
 
 /// Default constructor.
 GuiTexture::GuiTexture() {	m_Tiles = NULL; }
+//////////////////////////////////////////////////////////////////////////////////
 GuiTexture::GuiTexture(int x, int y, int width, int height)
 {
 	m_Location.x = x;
@@ -11,13 +13,13 @@ GuiTexture::GuiTexture(int x, int y, int width, int height)
 	m_Width = width;
 	m_Height = height;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Default destructor.
 GuiTexture::~GuiTexture() {	Free(); }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Frees a GuiTexture's memory.
 void GuiTexture::Free() { }
-		
+//////////////////////////////////////////////////////////////////////////////////
 /// Specifies the Tile set to use, and which Texture within the tileset to use.
 /** Example usage:
 	m_Tiles.Create(&m_Graphics, 1);
@@ -32,13 +34,13 @@ bool GuiTexture::UseTiles(Tile *Tiles, char TextureNum)
 	if(m_Tiles == NULL) return false;
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the tile set used by this GuiTexture.
-Tile* GuiTexture::GetTiles() { return m_Tiles; }
-
+Tile* GuiTexture::GetTiles() const { return m_Tiles; }
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the texture number used by this GuiTexture.
-char GuiTexture::GetTextureNum() { return m_TextureNum; }
-
+char GuiTexture::GetTextureNum() const { return m_TextureNum; }
+//////////////////////////////////////////////////////////////////////////////////
 /// Creates a renderable GuiTexture.
 /** Create should be called only after UseTiles().
 	\param TileNum Starting tile number to use (generally 0).
@@ -63,7 +65,7 @@ void GuiTexture::Create(char TileNum, int x, int y, int width, int height)
 	m_TileNum = TileNum;
 	m_visible = true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 void GuiTexture::Resize(int x, int y, int width, int height)
 {
 	m_Location.x = x;
@@ -78,18 +80,14 @@ void GuiTexture::Resize(int x, int y, int width, int height)
 	m_XScale = (float)m_Width/(float)m_trueWidth;
 	m_YScale = (float)m_Height/(float)m_trueHeight;
 }
-
-void Create(char TileNum, int x, int y, int width, int height);
-		
-		void Resize(int x,int y,int width,int height); 
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Renders the GuiTexture.
 /** If the GuiTexture is invisible or dead, it is not rendered.
 	\return TRUE if rendering is possible, or if the GuiTexture is dead or invisible.
 */
-bool GuiTexture::Render() 
+bool GuiTexture::Render() const
 {
-	if(!m_Tiles) { OutputDebugString("in GuiTexture::Render, tileset is Null!"); return false; }
+	if(!m_Tiles) { TRACE("in GuiTexture::Render, tileset is Null!"); return false; }
 	if(!m_visible) { return true; }
 
 	// Simply uses class Tile's draw function, and draws the current frame
@@ -97,50 +95,50 @@ bool GuiTexture::Render()
 	m_Tiles->Draw(m_TextureNum, m_TileNum, (float)m_Location.x, (float)m_Location.y, 0xFFFFFFFF, m_XScale, m_YScale);
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the X-position of the GuiTexture.
-long GuiTexture::GetXPos() 
+long GuiTexture::GetXPos() const
 {
 	return m_Location.x;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the Y-position of the GuiTexture.
-long GuiTexture::GetYPos() 
+long GuiTexture::GetYPos() const
 {
 	return m_Location.y;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the width of the GuiTexture's tiles.
-long GuiTexture::GetWidth()
+long GuiTexture::GetWidth() const
 {
 	return m_Width;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the height of the GuiTexture's tiles.
-long GuiTexture::GetHeight() 
+long GuiTexture::GetHeight() const
 {
 	return m_Height;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Sets the X, Y position to x, and y.
 void GuiTexture::SetXYPos(long x, long y) 
 {
 	m_Location.x = x;
 	m_Location.y = y;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the current X-Scale of this GuiTexture.
-float GuiTexture::GetXScale() 
+float GuiTexture::GetXScale() const
 {
 	return m_XScale;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the current Y-Scale of this GuiTexture.
-float GuiTexture::GetYScale() 
+float GuiTexture::GetYScale() const
 {
 	return m_YScale;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Sets the current X-Scale to Scale.
 /** The scale is absolute, not cumulative.
 	SetXScale(0.5f) followed by SetXScale(0.5f), sets the absolute scale to 0.5 the original.
@@ -150,10 +148,11 @@ void GuiTexture::SetXScale(float Scale)
 	// because the original rect never changes,
 	// we can reset m_Width.
 	//scale m_Width by the scaling factor.
-	m_Width *= (int)Scale;
+	float new_width = m_Width * Scale;
+	m_Width = (int)new_width;
 	m_XScale = Scale;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Sets the current Y-Scale to Scale.
 /** The scale is absolute, not cumulative.
 	SetYScale(0.5f) followed by SetYScale(0.5f), sets the absolute scale to 0.5 the original.
@@ -163,17 +162,20 @@ void GuiTexture::SetYScale(float Scale)
 	// because the original rect never changes,
 	// we can reset m_Height.	
 	//scale m_Height by the scaling factor.
-	m_Height *= (int)Scale;
+	float new_height = m_Height * Scale;
+	m_Height = (int)m_Height;
 	m_YScale = Scale;
 }
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Return the visibility status of the GuiTexture.
-bool GuiTexture::GetIsVisible() { return m_visible; }
-
+bool GuiTexture::GetIsVisible() const 
+{ 
+	return m_visible; 
+}
+//////////////////////////////////////////////////////////////////////////////////
 /// Set the visibility status of the GuiTexture to v.
 void GuiTexture::SetVisible(bool v) { m_visible = v; }
-
+//////////////////////////////////////////////////////////////////////////////////
 void GuiTexture::Translate(int x, int y) 
 {
 	m_Location.x += x;

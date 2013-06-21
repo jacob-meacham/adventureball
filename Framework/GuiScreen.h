@@ -25,7 +25,7 @@ public:
 		//m_Visible = false;
 		setFont(gGuiMgr.getDefaultFont());
 	}
-	virtual void Render() { RenderChildren(); }
+	virtual void Render() const { RenderChildren(); }
 	virtual int  HandleEvent(int type) { return GuiComponent::HandleEvent(type); }
 	virtual int  CommandHandle(GuiComponent *component, int cmd, int param) { return 0; }
 

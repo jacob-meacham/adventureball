@@ -1,22 +1,23 @@
 #include "Sprite.h"
 #include <iostream>
 #include <sstream>
-
+#include "Texture.h"
+//////////////////////////////////////////////////////////////////////////////////
 /// Default constructor.
 Sprite::Sprite() {
 	m_Tiles = NULL;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Default destructor.
 Sprite::~Sprite() {
 	Free();
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Frees a sprite's memory.
 void Sprite::Free() {
 	
 }
-		
+//////////////////////////////////////////////////////////////////////////////////
 /// Specifies the Tile set to use, and which Texture within the tileset to use.
 /** Example usage:
 	m_Tiles.Create(&m_Graphics, 1);
@@ -30,13 +31,19 @@ bool Sprite::UseTiles(Tile *Tiles, char TextureNum) {
 	if(m_Tiles == NULL) return false;
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the tile set used by this Sprite.
-Tile* Sprite::GetTiles() { return m_Tiles; }
-
+Tile* Sprite::GetTiles() const
+{ 
+	return m_Tiles; 
+}
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the texture number used by this sprite.
-char Sprite::GetTextureNum() { return m_TextureNum; }
-
+char Sprite::GetTextureNum() const
+{ 
+	return m_TextureNum; 
+}
+//////////////////////////////////////////////////////////////////////////////////
 /// Creates a renderable sprite.
 /** Create should be called only after UseTiles().
 	\param TileNum Starting tile number to use (generally 0).
@@ -75,16 +82,15 @@ void Sprite::Create(char TileNum, std::string name, float XPos, float YPos) {
 	m_autoAnimate = false;
 	m_defaultAnimation = 0;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 void Sprite::Collide(PhysicalEntity *other) {
 
 }
-
-bool Sprite::checkType(EntityType e) {
+//////////////////////////////////////////////////////////////////////////////////
+bool Sprite::checkType(EntityType e) const {
 	return (e == SPRITE);
 }
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Sets the current animation of the sprite.
 /** \return FALSE if animationNumber is greater than the current number of animations. */
 bool Sprite::SetAnimation(int animationNumber) {
@@ -96,17 +102,17 @@ bool Sprite::SetAnimation(int animationNumber) {
 	m_curFrame = m_Animations[m_curAnimation][0];
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Sets the default animation of the sprite.
 void Sprite::SetDefaultAnimation(int animationNumber) {
 	m_defaultAnimation = animationNumber;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the default animation of the sprite.
-int Sprite::GetDefaultAnimation() {
+int Sprite::GetDefaultAnimation() const {
 	return m_defaultAnimation;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Creates a new animation sequence.
 /** \param animationNumber The numberID of the animation.
 	\param startFrame The starting frame in the Sprite's tileset.
@@ -123,27 +129,27 @@ bool Sprite::CreateAnimationSequence(int animationNumber, u32 startFrame, u32 en
 	m_Animations[animationNumber][2] = nOption;
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Sets m_autoAnimate to autoA.
 void Sprite::SetAutoAnimate(bool autoA) {
 	m_autoAnimate = autoA;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the state of m_autoAnimate.
-bool Sprite::GetAutoAnimate() {
+bool Sprite::GetAutoAnimate() const {
 	return m_autoAnimate;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the current animation number ID.
-int Sprite::GetCurAnimation() {
+int Sprite::GetCurAnimation() const {
 	return m_curAnimation;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the current frame in the current animation.
-int Sprite::GetCurFrame() {
+int Sprite::GetCurFrame() const {
 	return m_curFrame;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Increments the current frame, and deals with any animation control codes
 bool Sprite::incFrame() {
 	m_curFrame++;
@@ -177,7 +183,7 @@ bool Sprite::incFrame() {
 	}
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Decrements the current frame.
 /** \return TRUE if the decrement is legal. */
 bool Sprite::decFrame() {
@@ -187,11 +193,7 @@ bool Sprite::decFrame() {
 	m_curFrame--;
 	return true;
 }
-
-
-
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Updates the sprite (performs animation).
 void Sprite::Update() {
 	if(!m_visible) {
@@ -203,12 +205,12 @@ void Sprite::Update() {
 	m_BoundingSphere.center += m_Velocity;
 	m_Location += m_Velocity;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Renders the sprite.
 /** If the sprite is invisible or dead, it is not rendered.
 	\return TRUE if rendering is possible, or if the sprite is dead or invisible.
 */
-bool Sprite::Render() {
+bool Sprite::Render() const {
 	if(m_Tiles == NULL) { OutputDebugString("in Sprite::Render, tileset is Null!"); return false; }
 	if(!m_visible) { return true; }
 
@@ -217,27 +219,27 @@ bool Sprite::Render() {
 	m_Tiles->Draw(m_TextureNum, m_curFrame, m_BoundingSphere.center.x - m_Width/2, m_BoundingSphere.center.y - m_Height/2, 0xFFFFFFFF, m_XScale, m_YScale);
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the X-position of the sprite.
-float Sprite::GetXPos() {
+float Sprite::GetXPos() const {
 	return m_BoundingSphere.center.x;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the Y-position of the sprite.
-float Sprite::GetYPos() {
+float Sprite::GetYPos() const {
 	return m_BoundingSphere.center.y;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the width of the sprite's tiles.
-long Sprite::GetWidth() {
+long Sprite::GetWidth() const {
 	return m_Width;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the height of the sprite's tiles.
-long Sprite::GetHeight() {
+long Sprite::GetHeight() const {
 	return m_Height;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Sets the X, Y position to x, and y.
 void Sprite::SetXYPos(float x, float y) {
 	m_Location.x = x;
@@ -246,50 +248,40 @@ void Sprite::SetXYPos(float x, float y) {
 	m_BoundingSphere.center.y = y + m_Height/2.f;
 
 }
-
-
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the current X-Scale of this Sprite.
-float Sprite::GetXScale() {
+float Sprite::GetXScale() const {
 	return m_XScale;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the current Y-Scale of this Sprite.
-float Sprite::GetYScale() {
+float Sprite::GetYScale() const {
 	return m_YScale;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Sets the current X-Scale to Scale.
 /** The scale is absolute, not cumulative.
 	SetXScale(0.5f) followed by SetXScale(0.5f), sets the absolute scale to 0.5 the original.
 */
 void Sprite::SetXScale(float Scale) {
-	// because the original rect never changes,
-	// we can reset m_Width.
-	m_Width = m_OriginalRect.right;
-	//scale m_Width by the scaling factor.
-	m_Width *= Scale;
+	float new_width = m_OriginalRect.right * Scale;
+	m_Width = (int)new_width;
 	m_XScale = Scale;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Sets the current Y-Scale to Scale.
 /** The scale is absolute, not cumulative.
 	SetYScale(0.5f) followed by SetYScale(0.5f), sets the absolute scale to 0.5 the original.
 */
 void Sprite::SetYScale(float Scale) {
-	// because the original rect never changes,
-	// we can reset m_Height.
-	m_Height = m_OriginalRect.bottom;
-	
-	//scale m_Height by the scaling factor.
-	m_Height *= Scale;
+	float new_height = m_OriginalRect.bottom * Scale;
+	m_Height = (int)new_height;
 	m_YScale = Scale;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Returns the sprite's current AABB.  
 /** This funtion is preferred over GetBoundingRect(). */
-RECT Sprite::GetRect() {
+RECT Sprite::GetRect() const {
 	RECT dst;
 	dst.top = (long)(m_Location.y + m_Velocity.y);
 	dst.left = (long)(m_Location.x + m_Velocity.x);
@@ -297,18 +289,22 @@ RECT Sprite::GetRect() {
 	dst.right = dst.left + m_Width;
 return dst;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Return the number of animation frames in the animation sequence animationNumber.
-int Sprite::GetNumAnimationFrames(int animationNumber) {
+int Sprite::GetNumAnimationFrames(int animationNumber) const {
 	return m_Animations[animationNumber][1] - m_Animations[animationNumber][0];
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Return the visibility status of the sprite.
-bool Sprite::GetIsVisible() { return m_visible; }
-
+bool Sprite::GetIsVisible() const {
+	return m_visible; 
+}
+//////////////////////////////////////////////////////////////////////////////////
 /// Set the visibility status of the sprite to v.
-void Sprite::SetVisible(bool v) { m_visible = v; }
-
+void Sprite::SetVisible(bool v) { 
+	m_visible = v; 
+}
+//////////////////////////////////////////////////////////////////////////////////
 void Sprite::Translate(float x, float y) {
 	m_BoundingSphere.center.x += x;
 	m_BoundingSphere.center.y += y;

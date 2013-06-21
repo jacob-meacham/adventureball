@@ -2,15 +2,12 @@
 
 const int TOTAL_ANIMATIONS = 64; // Max number of animation states per sprite
 
-#include <windows.h>
 #include <list>
 #include <string>
 #include <sstream>
-#include "GraphicsDevice.h"
-#include "Texture.h"
-#include "System.h"
-#include "Physics_Core.h"
+#include "PhysicsCore.h"
 
+class Tile;
 /// All rendered objects extend from the Sprite base class.
 /** The Sprite class handles all rendering of any game object.  This includes
 	animations, scale, and position.
@@ -42,15 +39,13 @@ class Sprite : public PhysicalEntity {
 		
 		/// enum for animation control codes.
 		enum AnimationOption
-	{
-		LOOP_ANIMATION = 200, ///< returns to the first frame of animation.  Loops infinitely.
-		GOTO_NEXT_ANIMATION, ///< Goes to the next animation.  Should not be set as the control code of the last animation.
-		MAINTAIN_LAST_FRAME, ///< Maintains the last frame of animation.
-		KILL_SPRITE, ///< When the last frame is reached, the sprite is destroyed.
-		GOTO_DEFAULT_ANIMATION ///< Goes to the default animation (animation #0)
-	};
-
-		
+		{
+			LOOP_ANIMATION = 200, ///< returns to the first frame of animation.  Loops infinitely.
+			GOTO_NEXT_ANIMATION, ///< Goes to the next animation.  Should not be set as the control code of the last animation.
+			MAINTAIN_LAST_FRAME, ///< Maintains the last frame of animation.
+			KILL_SPRITE, ///< When the last frame is reached, the sprite is destroyed.
+			GOTO_DEFAULT_ANIMATION ///< Goes to the default animation (animation #0)
+		};
 
 		// Constructor/Destructor.
 		Sprite();
@@ -63,18 +58,18 @@ class Sprite : public PhysicalEntity {
 		bool UseTiles(Tile *Tiles, char TextureNum); 
 
 		// Returns the tile set used by this Sprite.
-		Tile* GetTiles();
+		Tile* GetTiles() const;
 
 		// Returns the texture number used by this sprite.
-		char GetTextureNum();
+		char GetTextureNum() const;
 
 		// Creates a renderable sprite.
 		void Create(char TileNum, std::string name, float Xpos, float Ypos);
 
 		virtual void Collide(PhysicalEntity *other);
 
-		// Checks if this Sprite is an entity of type e. Will return false on all types except WALL.
-		virtual bool checkType(EntityType e);
+		// Checks if this Sprite is an entity of type e.
+		virtual bool checkType(EntityType e) const;
 		
 		// Creates a new animation sequence.
 		bool CreateAnimationSequence(int animationNumber, u32 startFrame, u32 numFrames, AnimationOption nOption);
@@ -90,7 +85,7 @@ class Sprite : public PhysicalEntity {
 		virtual void Update();
 
 		// Renders the sprite.
-		bool Render();
+		bool Render() const;
 		
 		// Setters.
 		void SetDefaultAnimation(int animationNumber);
@@ -103,18 +98,18 @@ class Sprite : public PhysicalEntity {
 		void Translate(float x, float y);
 
 		// Getters.		
-		int GetDefaultAnimation();
-		float GetXPos();
-		float GetYPos();
-		long GetWidth();
-		long GetHeight();
-		float GetXScale();
-		float GetYScale();
+		int GetDefaultAnimation() const;
+		float GetXPos() const;
+		float GetYPos() const;
+		long GetWidth() const;
+		long GetHeight() const;
+		float GetXScale() const;
+		float GetYScale() const;
 
-		RECT GetRect();
-		int GetNumAnimationFrames(int animationNumber);
-		bool GetIsVisible();
-		bool GetAutoAnimate();
-		int GetCurAnimation();
-		int GetCurFrame();
+		RECT GetRect() const;
+		int GetNumAnimationFrames(int animationNumber) const;
+		bool GetIsVisible() const;
+		bool GetAutoAnimate() const;
+		int GetCurAnimation() const;
+		int GetCurFrame() const;
 };

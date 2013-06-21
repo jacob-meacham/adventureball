@@ -1,16 +1,16 @@
 #include "Texture.h"
-
+//////////////////////////////////////////////////////////////////////////////////
 Texture::Texture() {
 	nWidth = nHeight = 0;
 	pTexture = NULL;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 bool Texture::free() 
 {
 	DX_RELEASE(pTexture);
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Loads a texture into m_Texture from file.
 /** \param Graphics The GraphicsCore to which this texture is attached.
 	\param FileName Name of the image file to use.
@@ -48,7 +48,7 @@ bool Texture::load(const char * pfilename)
 		
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Getter which calculates the width of the texture, using D3DSURFACE_DESC.
 u32 Texture::width() const
 {
@@ -62,7 +62,7 @@ u32 Texture::width() const
 
   return d3dsd.Width;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Getter which calculates the height of the texture, using D3DSURFACE_DESC.
 u32 Texture::height() const
 {
@@ -78,8 +78,8 @@ u32 Texture::height() const
 
   return d3dsd.Height;
 }
-
-/// Blits a sprite to the screen.  
+//////////////////////////////////////////////////////////////////////////////////
+/// Blits a sprite to the screen.
 /** This function should mostly only be called by Draw() in the Tile class.  It renders any subset of the texture
 	\param DestX The x-coordinate to render the texture.  This coordinate represents the top-left corner.
 	\param DestY The y-coordinate to render the texture.  This coordinate represents the top-left corner.
@@ -96,7 +96,7 @@ bool Texture::draw(float destx, float desty,
 				  long srcx, long srcy, 
 				  long width, long height, 
 				  float scalex, float scaley,
-				  Color color, Vector2 * pcenter,
+				  Color color, const Vector2 * pcenter,
 				  float angle) const
 {
   if(!pTexture) 
@@ -123,20 +123,19 @@ bool Texture::draw(float destx, float desty,
 
   return true;
 }
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Default Constructor.
 Tile::Tile() {
 	aWidths = aHeights = aColumns = NULL;
 	pTextures = NULL;
 	nTextures = 0;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Default Destructor.
 Tile::~Tile() {
 	Free();
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Create a Tileset, with the specified number of textures.
 /** \param Graphics The parent GraphicsCore object.
 	\param NumTextures The number of texture that this Tileset will have
@@ -157,7 +156,7 @@ bool Tile::Create(u32 NumTextures)
 
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Frees a tileset.
 void Tile::Free() {
 	// Simply need to call Texture Free() for each texture.
@@ -177,7 +176,7 @@ void Tile::Free() {
 	
 	nTextures = 0;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Load a tileset from File into one of the texture slots created using Tile::Create().
 /** \param TextureNum Index of the texture to be loaded
 	\param Filename Filename of the texture to load
@@ -205,7 +204,7 @@ bool Tile::Load(u32 TextureNum, const char *Filename, short TileWidth, short Til
 	aColumns[TextureNum] = pTextures[TextureNum].width() / aWidths[TextureNum];
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Free a texture from the tileset.
 bool Tile::FreeTexture(u32 TextureNum) {
 	if(TextureNum >= nTextures || !pTextures) return false;
@@ -213,27 +212,28 @@ bool Tile::FreeTexture(u32 TextureNum) {
 	pTextures[TextureNum].free();
 	return true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Width of the WHOLE tileset in TextureNum.
-u32 Tile::GetWidth(u32 TextureNum) {
+u32 Tile::GetWidth(u32 TextureNum) const {
 	if(TextureNum >= nTextures || !pTextures) return 0;
 
 	return aWidths[TextureNum];
 }
+//////////////////////////////////////////////////////////////////////////////////
 /// Height of the WHOLE tileset in TextureNum.
-u32 Tile::GetHeight(u32 TextureNum) {
+u32 Tile::GetHeight(u32 TextureNum) const {
 	if(TextureNum >= nTextures || !pTextures) return 0;
 
 	return aHeights[TextureNum];
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Number of tiles in the tileset.
-u32 Tile::GetNum(u32 TextureNum) {
+u32 Tile::GetNum(u32 TextureNum) const {
 	if(TextureNum >= nTextures || !pTextures) return 0;
 
 	return aColumns[TextureNum] * (pTextures[TextureNum].height() / aHeights[TextureNum]);
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Draw the specified tile from the specified tileset onto the screen, using the Texture::Blit().
 /** \param TextureNum The index of the Texture from the tileset.
 	\param TileNum The number of the tile in the tileset.  The tiles are numbered left-to-right, 
@@ -248,7 +248,7 @@ bool Tile::Draw(u32 TextureNum, u32 TileNum, float ScreenX,
 				  float ScreenY, D3DCOLOR Color,
 				  float XScale, float YScale,
 				  float rotationCenterX, float rotationCenterY,
-				  double angle) {
+				  float angle) const {
 	
 	long SrcX, SrcY;
 
@@ -262,10 +262,14 @@ bool Tile::Draw(u32 TextureNum, u32 TileNum, float ScreenX,
 	SrcX = (TileNum % aColumns[TextureNum]) * aWidths[TextureNum];
 	SrcY = (TileNum / aColumns[TextureNum]) * aHeights[TextureNum];
 
+	Vector2 rotationCenter;
+	rotationCenter.x = rotationCenterX;
+	rotationCenter.y = rotationCenterY;
+
 	// Then, we can just use Texture::Blit().
 	if(!pTextures[TextureNum].draw(ScreenX, ScreenY, SrcX, SrcY,
 								   aWidths[TextureNum], aHeights[TextureNum],
-								   XScale, YScale, Color)) 
+								   XScale, YScale, Color, &rotationCenter, angle)) 
 	{
 		return false; 
 	}

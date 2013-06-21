@@ -1,7 +1,5 @@
 #pragma once
 
-// NEED TO USE PERF COUNTER FOR TIMERS!!!!
-
 #include "GraphicsDevice.h"
 /////////////////////////////////////////////////////////////////////////
 /// The main drawing class.
@@ -12,7 +10,6 @@ class Texture {
         u32 nWidth, nHeight; ///< Width and Height of the texture.
 
 	public:
-
 		Texture();
 		~Texture() { free(); }
 
@@ -27,7 +24,7 @@ class Texture {
 				  long srcx, long srcy, 
 				  long width, long height, 
 				  float scalex, float scaley,
-				  Color color, Vector2 * pcenter = NULL,
+				  Color color, const Vector2 * pcenter = NULL,
 				  float angle = 0.0f) const;
 		
 		u32 width() const;
@@ -62,9 +59,9 @@ class Tile {
 		bool FreeTexture(u32 TextureNum);
 
 		// Getters.
-		u32 GetWidth(u32 TextureNum);
-		u32 GetHeight(u32 TextureNum);
-		u32 GetNum(u32 TextureNum);
+		u32 GetWidth(u32 TextureNum) const;
+		u32 GetHeight(u32 TextureNum) const;
+		u32 GetNum(u32 TextureNum) const;
 
 		// Setters.
 		bool SetTransparent(bool Enabled);
@@ -74,5 +71,5 @@ class Tile {
 				  float ScreenY, D3DCOLOR Color = 0xFFFFFFFF,
 				  float XScale = 1.0f, float YScale = 1.0f,
 				  float rotationCenterX = 0.0f, float rotationCenterY = 0.0f,
-				  double angle = 0.0f);
+				  float angle = 0.0f) const;
 };

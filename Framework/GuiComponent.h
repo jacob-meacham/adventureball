@@ -39,10 +39,10 @@ public:
 	int removeChildComponent(const char* pname);
 
 	void setRenderLabel(bool render) { m_renderLabel = render; }
-    bool getRenderLabel() { return m_renderLabel; }
+    bool getRenderLabel() const { return m_renderLabel; }
 
     void setLabelPos(int x, int y) { m_LabelPos.x = x; m_LabelPos.y = y; }
-    void getLabelPos(POINT &label) { label = m_LabelPos; }
+    void getLabelPos(POINT &label) const { label = m_LabelPos; }
     void setPosition(int x, int y);
 
 	GuiComponent* GetLock() const;
@@ -69,8 +69,8 @@ public:
 	void setLabel(const char* pLabel) { m_Label = pLabel; }
 	std::string getLabel() const { return m_Label; }
 	
-	virtual bool TestHit(int x,int y);
-	virtual int TestHitElements(int x,int y) { return 0; }
+	virtual bool TestHit(int x,int y) const;
+	virtual int TestHitElements(int x,int y) const { return 0; }
 
 	virtual void setPos(int x, int y) 
 	{ 
@@ -89,8 +89,8 @@ public:
 	void setSize(int width, int height) { m_Width = width; m_Height = height; }
 	POINT getSize() const { POINT temp; temp.x = m_Width; temp.y = m_Height; return temp; }
 
-	void getFullRect(RECT &rect);
-	virtual void getUsableRect(RECT &rect);
+	void getFullRect(RECT &rect) const;
+	virtual void getUsableRect(RECT &rect) const;
 
 	void Show() { m_Visible = true; }
 	void Hide() { m_Visible = false; }
@@ -100,10 +100,10 @@ public:
 
 	void BringToFront();
 
-	virtual void Render() { 
+	virtual void Render() const { 
 		RenderChildren();	
 	}
-	void RenderChildren();
+	void RenderChildren() const;
 
 	virtual int  HandleEvent(int type);
 	virtual int  CommandHandle(GuiComponent *component, int cmd, int param) { return 0; }

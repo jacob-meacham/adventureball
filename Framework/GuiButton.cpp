@@ -6,7 +6,7 @@ GuiButton::GuiButton(int x, int y, int width, int height, const char* text)
     m_ButtonTiles = NULL;
 	m_Locked = false;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 GuiButton::~GuiButton()
 {
     if(m_ButtonTiles)
@@ -16,6 +16,7 @@ GuiButton::~GuiButton()
         m_ButtonTiles = NULL;
     }
 }
+//////////////////////////////////////////////////////////////////////////////////
 void GuiButton::setLocked(bool lock)
 { 
 	m_Locked = lock;
@@ -24,8 +25,7 @@ void GuiButton::setLocked(bool lock)
 		m_ButtonTiles->setTileNum(BUTTON_LOCK);
 	}
 }
-
-
+//////////////////////////////////////////////////////////////////////////////////
 void GuiButton::setGraphics(int textureNum)
 {
     m_ButtonTiles = new GuiTexture();
@@ -35,7 +35,7 @@ void GuiButton::setGraphics(int textureNum)
 	if(m_Locked)
         m_ButtonTiles->setTileNum(BUTTON_LOCK);
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 int GuiButton::HandleEvent(int type)
 {
     if(m_Locked)
@@ -78,8 +78,8 @@ int GuiButton::HandleEvent(int type)
 	};
     return GuiComponent::HandleEvent(type);
 }
-
-void GuiButton::Render()
+//////////////////////////////////////////////////////////////////////////////////
+void GuiButton::Render() const
 {
 	if(m_ButtonTiles)
 		m_ButtonTiles->Render();
@@ -95,7 +95,7 @@ void GuiButton::Render()
 	}
     GuiComponent::Render();
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 void GuiButton::setPos(int x, int y) 
 {
 	LONG dx = x - m_Location.x;

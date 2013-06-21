@@ -7,10 +7,10 @@
 #define LEAN_AND_MEAN
 
 // SCREEN
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
-#define SCREENCENTERX 512
-#define SCREENCENTERY 384
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
+#define SCREENCENTERX 320
+#define SCREENCENTERY 240
 
 #define DX_RELEASE(x) if(x) { x->Release(); x = NULL; }
 

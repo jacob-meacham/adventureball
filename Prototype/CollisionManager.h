@@ -1,8 +1,7 @@
 #pragma once
 
-#include "..\Framework\Physics_Core.h"
-#include "Wall.h"
-#include "..\Framework\Sprite.h"
+#include "Framework\PhysicsCore.h"
+#include "Framework\Sprite.h"
 
 class Sprite;
 class Wall;
@@ -33,17 +32,11 @@ class SpriteLayer : public BaseLayer<Sprite> {
 class CollisionManager {
 	private:
 		StaticLayer m_Walls;
-//		ExitLayer m_Exits;
 		SpriteLayer m_Sprites;
-		//DESIGN: Do we want a seperate sprite layer for enemies and items?
-		//SpriteLayer m_enemies;
-		//SpriteLayer m_items;
-		Level *m_parent;
 	public:
 		CollisionManager();
-		void SetParent(Level *p);
-		bool RegisterEntity(std::string layerName, PhysicalEntity* entity);
-		bool FreeLayer(std::string layerName);
+		bool RegisterEntity(const std::string & layerName, PhysicalEntity* entity);
+		bool FreeLayer(const std::string & layerName);
 		void FindAndResolveCollisions();
 		void MakeRoomsActive();
 };

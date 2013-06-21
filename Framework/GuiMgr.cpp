@@ -1,16 +1,22 @@
 #include "GuiMgr.h"
 #include "System.h"
+#include "Texture.h"
 
 GuiMgr gGuiMgr;
-
+//////////////////////////////////////////////////////////////////////////////////
+GuiMgr::~GuiMgr() {
+	delete m_Tiles;
+	m_Tiles = NULL;
+}
+//////////////////////////////////////////////////////////////////////////////////
 void GuiMgr::RenderGui() { m_pActiveScreen->Render(); }
-
+//////////////////////////////////////////////////////////////////////////////////
 void GuiMgr::SetActiveComponent(GuiComponent* pActive) 
 { 
 	m_pActiveScreen = pActive; 
 	m_Active = true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 void GuiMgr::SendEvent(int type, int key, int scanCode, int x, int y)
 {
 	POINT pointer = {x, y};
@@ -53,3 +59,4 @@ void GuiMgr::SendEvent(int type, int key, int scanCode, int x, int y)
 	if(m_pActiveScreen) 
 		m_pActiveScreen->HandleEvent(m_CurrentEvent.type);	
 }
+//////////////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,4 @@
-#include "Input_Core.h"
-
-#define Error(x) MessageBox(NULL, x, "Error", MB_OK);
+#include "Input.h"
 
 /// Default constructor.  Sets everything to null.  Must call Init() after constructor.
 Input::Input() {

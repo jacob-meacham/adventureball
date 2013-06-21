@@ -2,13 +2,13 @@
 #include "..\Framework\Sprite.h"
 
 
-#define DOWNPAN SCREENCENTERY + 20
-#define UPPAN SCREENCENTERY - 20
-#define LEFTPAN SCREENCENTERX - 20
-#define RIGHTPAN SCREENCENTERX + 20
+#define DOWNPAN SCREENCENTERY
+#define UPPAN SCREENCENTERY
+#define LEFTPAN SCREENCENTERX
+#define RIGHTPAN SCREENCENTERX
 
 Level gLevel;
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Default constructor.
 Level::Level() {
 	m_rooms.clear();
@@ -17,59 +17,54 @@ Level::Level() {
 	m_currentRoom = NULL;
 	lastRoomAdded = 0;
 	m_cameraVelocityX = m_cameraVelocityY = 0;
-	//m_CollisionManager.SetParent(this);
 
 	////////HACK/////////
 	firstTime = true;
 	////////HACK/////////
 	
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Adds the player Ball to this level, and registers the ball.
 void Level::AddPlayer(Ball *ball) {
 	m_ball = ball;
 	m_CollisionManager.RegisterEntity("Sprite", m_ball);
 }
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Specifies the tileset to use for Walls in this level.
 void Level::UseTiles(Tile* tiles) {
 	m_tiles = tiles;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Adds a Room to this level.
 void Level::AddRoom(Room m) { m_rooms.push_back(m); }
-
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Adds a room with the specified number of sides and side length
 void Level::AddRoom(int numSides, int sideLength) {
 	Room temp(lastRoomAdded++, numSides, sideLength, m_tiles);
 	AddRoom(temp);
 }
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Pans the camera over the level.
 void Level::PanLevel(float x, float y) {
 	TranslateLevel(x, y);
 	m_ball->Translate(x, y);
 }
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Adds a corridor between rooms.
 /** This is the function that actually places rooms.
 */
 void Level::AddCorridor(int room1, int side1, int room2, int side2, int length) {
-
 	Room* r1 = &m_rooms.at(room1);
 	Room* r2 = &m_rooms.at(room2);
 	Wall* s1 = r1->GetSide(side1);
 	Wall* s2 = r2->GetSide(side2);
 
 	r1->SetSideAsExit(side1, room1);
-	r1->SetSideAsDoor(side1, RED_KEY);
 	r2->SetSideAsExit(side2, room2);
+	/*
+	r1->SetSideAsDoor(side1, RED_KEY);
 	r2->SetSideAsDoor(side2, RED_KEY);
+	*/
 
 	float sa1 = s1->GetAngle();
 
@@ -81,13 +76,11 @@ void Level::AddCorridor(int room1, int side1, int room2, int side2, int length) 
 	
 	// Center room
 	r2->MoveRoom(SCREENCENTERX, SCREENCENTERY);
-	
-	
+		
 	// Rotate rooms to 0, so that corridor is easier to calculate.
 	// TODO: Calculate corridor, rather than rotating everything.
 	r1->RotateRoom(-sa1);
 	r2->RotateRoom(s1->GetAngle() - s2->GetAngle() + PI);
-
 
 	BOUNDINGLINE b1 = s1->GetBoundingLine();
 	BOUNDINGLINE b2 = s2->GetBoundingLine();
@@ -124,7 +117,7 @@ void Level::AddCorridor(int room1, int side1, int room2, int side2, int length) 
 	r2->RotateRoom(sa1);
 	m_corridors.back().RotateCorridor(sa1);
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Updates the level, all sprites in the level, and manages collisions.
 void Level::UpdateLevel() {
 	m_cameraVelocityX = 0;
@@ -136,12 +129,14 @@ void Level::UpdateLevel() {
 	else if(m_ball->GetYPos() < UPPAN && m_ball->GetYVel() < 0) {
 		m_cameraVelocityY = -m_ball->GetYVel();
 	}
-	else if(m_ball->GetXPos() > RIGHTPAN && m_ball->GetXVel() > 0) {
+	
+	if(m_ball->GetXPos() > RIGHTPAN && m_ball->GetXVel() > 0) {
 		m_cameraVelocityX = -m_ball->GetXVel();
 	}
 	else if(m_ball->GetXPos() < LEFTPAN && m_ball->GetXVel() < 0) {
 		m_cameraVelocityX = -m_ball->GetXVel();
 	}
+
 	if(m_cameraVelocityX != 0 || m_cameraVelocityY != 0)
 		PanLevel(m_cameraVelocityX, m_cameraVelocityY);
 
@@ -149,8 +144,7 @@ void Level::UpdateLevel() {
 
 	m_CollisionManager.FindAndResolveCollisions();
 }
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Rotates the entire level by 'angle' (not including sprites in the level)
 void Level::RotateGame(float angle) {
 	std::vector<Room>::iterator iRoom;
@@ -163,23 +157,21 @@ void Level::RotateGame(float angle) {
 	}
 	
 }
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Render the full level, including all sprites.
-void Level::RenderLevel() {
-	std::vector<Room>::iterator iRoom;
+void Level::RenderLevel() const {
+	std::vector<Room>::const_iterator iRoom;
 	for(iRoom = m_rooms.begin(); iRoom != m_rooms.end(); iRoom++) {
-		// TODO: Change this so that it only renders rooms on the drawing surface
-		//if((*iRoom).m_curX >= 0 && (*iRoom).m_curX <= 800 && (*iRoom).m_curY >= 0 && (*iRoom).m_curY <= 600) {
 			(*iRoom).Render();
-		//}
 	}
-	std::list<Corridor>::iterator iCorridor;
+	std::list<Corridor>::const_iterator iCorridor;
 	for(iCorridor = m_corridors.begin(); iCorridor != m_corridors.end(); iCorridor++) {
 		(*iCorridor).Render();
 	}
-}
 
+	m_ball->Render();
+}
+//////////////////////////////////////////////////////////////////////////////////
 /// Move the level by a translation vector.
 void Level::TranslateLevel(float x, float y) {
 	std::vector<Room>::iterator iRoom;
@@ -188,21 +180,21 @@ void Level::TranslateLevel(float x, float y) {
 			(*iRoom).TranslateRoom(x, y);
 	}
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Center the camera on the room whose roomNumber is the input
 void Level::CenterLevel(int roomNumber) {
 	Room *temp = &m_rooms[roomNumber];
 	m_ball->Translate(temp->GetCenterX()-temp->GetCurX(), temp->GetCenterY()-temp->GetCurY());
 	TranslateLevel(temp->GetCenterX()-temp->GetCurX(), temp->GetCenterY()-temp->GetCurY());
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Register all the walls and exits for this room
 void Level::RegisterRoom(Room *room) {
 	for(int i = 0; i < room->GetNumSides(); i++) {
 		m_CollisionManager.RegisterEntity("Wall", room->GetSide(i));
 	}
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 void Level::ActivateRoomsWithSprite(Sprite* s) {
 	//We need to check what bounding box the player is in.
 	std::vector<Room>::iterator iRoom;

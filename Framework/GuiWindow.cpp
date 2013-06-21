@@ -6,7 +6,7 @@ GuiWindow::GuiWindow(int x,int y,int width,int height, const char* pLabel) : Gui
 	m_TitleBar = NULL;
 	m_Background = NULL;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 void GuiWindow::setGraphics(int titleBarTN, int backgroundTN) {
     m_TitleBar = new GuiTexture();
     m_Background = new GuiTexture();
@@ -17,7 +17,7 @@ void GuiWindow::setGraphics(int titleBarTN, int backgroundTN) {
 	m_Background->UseTiles(gGuiMgr.m_Tiles, backgroundTN);
 	m_Background->Create(0, m_Location.x, m_Location.y + WINDOW_TITLEBAR, m_Width, m_Height - WINDOW_TITLEBAR);
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 int GuiWindow::HandleEvent(int type)
 {
 	std::string s;
@@ -43,8 +43,8 @@ int GuiWindow::HandleEvent(int type)
 	case GUI_LMOUSEBUTTONDOWN:
 		{
 			s = ("Hitting left button on " + getLabel());
-			OutputDebugString(s.c_str());
-			GuiEvent* geEvent;
+			TRACE(s.c_str());
+			const GuiEvent* geEvent;
 			geEvent = gGuiMgr.getCurrentEvent();
 			if(getParent())
 			{
@@ -77,7 +77,7 @@ int GuiWindow::HandleEvent(int type)
 		{
 			if(m_bCanDrag)
 			{
-				GuiEvent* curEvent;
+				const GuiEvent* curEvent;
 				curEvent = gGuiMgr.getCurrentEvent();
 				RECT parentRect;
 				POINT componentSize;
@@ -107,7 +107,7 @@ int GuiWindow::HandleEvent(int type)
 	}
 		return GuiComponent::HandleEvent(type);
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 void GuiWindow::setPos(int x, int y) 
 {
 	LONG dx = x - m_Location.x;
@@ -124,8 +124,8 @@ void GuiWindow::setPos(int x, int y)
 	}
 	GuiComponent::setPos(x, y);
 }
-
-void GuiWindow::Render()
+//////////////////////////////////////////////////////////////////////////////////
+void GuiWindow::Render() const
 {
 	m_Background->Render();
 	m_TitleBar->Render();
@@ -137,11 +137,12 @@ void GuiWindow::Render()
 											WINDOW_TITLEBAR);
 	GuiComponent::Render();
 }
-
-void GuiWindow::getUsableRect(RECT &rect) 
+//////////////////////////////////////////////////////////////////////////////////
+void GuiWindow::getUsableRect(RECT &rect) const
 {
 	rect.top = m_Location.y + WINDOW_TITLEBAR;
 	rect.left = m_Location.x;
 	rect.bottom = m_Location.y + m_Height;
 	rect.right = m_Location.x + m_Width;
 }
+//////////////////////////////////////////////////////////////////////////////////

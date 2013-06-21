@@ -1,7 +1,9 @@
 #include "WinMain.h"
-#include "..\Framework\DataSet.h"
 #include <windows.h>
-
+#include "Framework\DataSet.h"
+#include "Framework\GuiMgr.h"
+#include "Level.h"
+//////////////////////////////////////////////////////////////////////////////////
 /// Default constructor.  Creates the window.
 Prototype::Prototype() 
 {
@@ -11,8 +13,9 @@ Prototype::Prototype()
 	g_fAnimationTimer = 0;
 	g_fElpasedTime = 0;
 	m_printfps = false;
+	windowed = true;
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Called before the game enters the message pump.
 /** This function initializes graphics and input devices, loads the main font,
 */
@@ -20,6 +23,12 @@ bool Prototype::onInit()
 {
 	if(!System::onInit())
 		return false;
+
+	m_Keyboard.Init(getWindow().getHWnd(), getWindow().getHInst());
+	m_Keyboard.Create(KEYBOARD, windowed);
+
+	m_Mouse.Init(getWindow().getHWnd(), getWindow().getHInst());
+	m_Mouse.Create(MOUSE, windowed);
 
 	m_rotation = 0;
 
@@ -36,21 +45,14 @@ bool Prototype::onInit()
 	m_Ball.UseTiles(&m_Tiles, 0);
 
 	// Create ball, and add ball to level.
-	m_Ball.Create(0, "ball", SCREENCENTERX - 15, SCREENCENTERY - 15);
+	m_Ball.Create(0, "ball", SCREENCENTERX, SCREENCENTERY);
+	m_Ball.AddItem(RED_KEY);
+	m_Ball.SetNextActiveItem();
 	gLevel.AddPlayer(&m_Ball);
 
 	gLevel.UseTiles(&m_Tiles);
 
-	gGuiMgr.m_Tiles = new Tile();
-	gGuiMgr.m_Tiles->Create(6);
-	gGuiMgr.m_Tiles->Load(0, "Data\\windowBG1.png", 512, 512);
-	gGuiMgr.m_Tiles->Load(1, "Data\\windowBG2.png", 512, 512);
-	gGuiMgr.m_Tiles->Load(2, "Data\\windowTB1.png", 512, 20);
-	gGuiMgr.m_Tiles->Load(3, "Data\\windowTB2.png", 512, 20);
-	gGuiMgr.m_Tiles->Load(4, "Data\\static1.png", 100, 64);
-	gGuiMgr.m_Tiles->Load(5, "Data\\buttonA.png", 64, 40);
-
-	gGuiMgr.setDefaultFont(&mainFont);
+	initGui();
 	
 	// Add rooms.
 	gLevel.AddRoom(8, 40);
@@ -69,13 +71,25 @@ bool Prototype::onInit()
 	gLevel.AddCorridor(4, 5, 6, 0, 100);
 	gLevel.AddCorridor(6, 3, 7, 0, 300);	
 
-	// Give the player an item
-	player.AddItem(RED_KEY);
-	player.SetNextActiveItem();
-
 	// Begin level.
-	//gLevel.EnterRoom(0);
 	m_Ball.SetXYVel(2, 2);
+
+	g_dwLastTick = timeGetTime();
+	return TRUE; 
+}
+//////////////////////////////////////////////////////////////////////////////////
+void Prototype::initGui()
+{
+	gGuiMgr.m_Tiles = new Tile();
+	gGuiMgr.m_Tiles->Create(6);
+	gGuiMgr.m_Tiles->Load(0, "Data\\windowBG1.png", 512, 512);
+	gGuiMgr.m_Tiles->Load(1, "Data\\windowBG2.png", 512, 512);
+	gGuiMgr.m_Tiles->Load(2, "Data\\windowTB1.png", 512, 20);
+	gGuiMgr.m_Tiles->Load(3, "Data\\windowTB2.png", 512, 20);
+	gGuiMgr.m_Tiles->Load(4, "Data\\static1.png", 100, 64);
+	gGuiMgr.m_Tiles->Load(5, "Data\\buttonA.png", 64, 40);
+
+	gGuiMgr.setDefaultFont(&mainFont);
 
 	/*
 	m_pScreen = new GuiScreen(0, 0, 10000, 10000);
@@ -114,19 +128,14 @@ bool Prototype::onInit()
 	m_pScreen->attachChildComponent(m_pWindow);
 	m_pScreen->attachChildComponent(m_pSecondWindow);
 */
-	
-		
-	g_dwLastTick = timeGetTime();
-	return TRUE; 
 }
-
-
+//////////////////////////////////////////////////////////////////////////////////
 /// Shutdown function, called after the message pump has completed.
 void Prototype::shutdown() 
 {
-	delete gGuiMgr.m_Tiles;
+	
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 void Prototype::onProcess() 
 {	
 	// Timer updates.
@@ -137,7 +146,11 @@ void Prototype::onProcess()
 	
 	// FPS calculation, for debugging
 	m_fps++;
-	if( g_fAnimationTimer >= 1.0f ) { g_fAnimationTimer = 0.0f; m_printfps = true; s.str("");}
+	if( g_fAnimationTimer >= 1.0f ) { 
+		g_fAnimationTimer = 0.0f; 
+		m_printfps = true; 
+		fpsString.str("");
+	}
 	
 	processInput();
 
@@ -149,35 +162,31 @@ void Prototype::onProcess()
 		gGraphics.clear();
 		gGraphics.beginSprite();
 		gLevel.RenderLevel();
-		m_Ball.Render();
-		//gGuiMgr.RenderGui();
 
+		//gGuiMgr.RenderGui();
+		
 		if(m_printfps) {
-			s << m_fps << " " << g_fElpasedTime << ", (" << m_Ball.GetXPos() << ", " << m_Ball.GetYPos() << ")";
+			fpsString << m_fps << " " << g_fElpasedTime << ", (" << m_Ball.GetXPos() << ", " << m_Ball.GetYPos() << ")";
 		m_printfps = false;
 		m_fps = 0;
 		}
 
-		mainFont.render((char*)s.str().c_str(), 0, 0, 500, 100);
+		mainFont.render((char*)fpsString.str().c_str(), 0, 0, 500, 100);
 		gGraphics.endSprite();
 		gGraphics.endScene();
 	}
 	// Display graphics.
 	gGraphics.display();
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 bool Prototype::processInput() 
 {
-	/*
 	// Read keyboard and mouse state.
 	m_Keyboard.Read();
 	m_Mouse.Read();
 	
 	if(m_Mouse.GetButtonState(MOUSE_LBUTTON) == TRUE) {
 		m_Mouse.SetLock(0);
-		std::stringstream s;
-		s << m_Mouse.GetXPos() << ", " << m_Mouse.GetYPos();
-		//TRACE(0, s.str().c_str());
 	}
     // End the game on escape.
 	if(m_Keyboard.GetKeyState(DIK_ESCAPE) == TRUE) {
@@ -209,11 +218,9 @@ bool Prototype::processInput()
 	if(m_Keyboard.GetKeyState(DIK_D) == TRUE) {
 		m_Ball.SetXVel(5);
 	}	
-*/
 	return true;
-	
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 LRESULT CALLBACK Prototype::MsgProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	if(gGuiMgr.GetActive())
@@ -250,7 +257,7 @@ LRESULT CALLBACK Prototype::MsgProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM l
 	}
     return DefWindowProc(hWnd, Msg, wParam, lParam);
 }
-
+//////////////////////////////////////////////////////////////////////////////////
 int PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int nCmdShow)
 {
 #ifdef _DEBUG
@@ -273,5 +280,3 @@ int PASCAL WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int nCmdSh
 
 	return rval;
 }
-
-

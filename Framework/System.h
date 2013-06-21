@@ -19,8 +19,8 @@ public:
 	bool resize(long width, long height);		
 	void showMouse(bool bshow = true); 
 
-	HWND getHWnd();
-	HINSTANCE getHInst();
+	HWND getHWnd() const;
+	HINSTANCE getHInst() const;
 };
 //////////////////////////////////////////////////////////////////////////////////
 class System 
