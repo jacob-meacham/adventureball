@@ -14,8 +14,7 @@ Sprite::~Sprite() {
 
 /// Frees a sprite's memory.
 void Sprite::Free() {
-	ZeroMemory(&m_OriginalRect, sizeof(RECT));
-	ZeroMemory(&m_Velocity, sizeof(Velocity));
+	
 }
 		
 /// Specifies the Tile set to use, and which Texture within the tileset to use.
@@ -45,7 +44,7 @@ char Sprite::GetTextureNum() { return m_TextureNum; }
 	\param XPos X-Coordinate of the sprite.
 	\param YPos Y-Coordinate of the sprite.
 */
-void Sprite::Create(char TileNum, std::string name, long XPos, long YPos) {
+void Sprite::Create(char TileNum, std::string name, float XPos, float YPos) {
 
 	RECT BoundingRect;
 	m_Width = m_Tiles->GetWidth(m_TextureNum);
@@ -58,7 +57,7 @@ void Sprite::Create(char TileNum, std::string name, long XPos, long YPos) {
 	m_BoundingSphere.center.x = XPos;
 	m_BoundingSphere.center.y = YPos;
 
-	m_BoundingSphere.radius = m_Width/2;
+	m_BoundingSphere.radius = m_Width/2.f;
 
 	m_Name = name;
 	m_Location.x = XPos;
@@ -69,8 +68,8 @@ void Sprite::Create(char TileNum, std::string name, long XPos, long YPos) {
 	m_TileNum = TileNum;
 	m_visible = true;
 	m_OriginalRect = BoundingRect;
-	m_Velocity.m_x = 0;
-	m_Velocity.m_y = 0;
+	m_Velocity.x = 0.f;
+	m_Velocity.y = 0.f;
 	m_XScale = 1.0000f;
 	m_YScale = 1.0000f;
 	m_autoAnimate = false;
@@ -114,7 +113,7 @@ int Sprite::GetDefaultAnimation() {
 	\param endFrame The ending frame in the Sprite's tileset.
 	\param nOption Animation option (see enum AnimationOption ).
 */
-bool Sprite::CreateAnimationSequence(int animationNumber, int startFrame, int endFrame, AnimationOption nOption) {
+bool Sprite::CreateAnimationSequence(int animationNumber, u32 startFrame, u32 endFrame, AnimationOption nOption) {
 	m_numAnimations++;
 	// since we have just incremented m_numAnimations, if we have more than the total allowed # of animations,
 	// or our start frame starts further than there are number of tiles, return false.
@@ -201,10 +200,8 @@ void Sprite::Update() {
 	if(GetAutoAnimate()) { 
 		incFrame();
 	}
-	m_BoundingSphere.center.x += m_Velocity.m_x;
-	m_BoundingSphere.center.y += m_Velocity.m_y;
-	m_Location.x += m_Velocity.m_x;
-	m_Location.y += m_Velocity.m_y;
+	m_BoundingSphere.center += m_Velocity;
+	m_Location += m_Velocity;
 }
 
 /// Renders the sprite.
@@ -222,12 +219,12 @@ bool Sprite::Render() {
 }
 
 /// Returns the X-position of the sprite.
-long Sprite::GetXPos() {
+float Sprite::GetXPos() {
 	return m_BoundingSphere.center.x;
 }
 
 /// Returns the Y-position of the sprite.
-long Sprite::GetYPos() {
+float Sprite::GetYPos() {
 	return m_BoundingSphere.center.y;
 }
 
@@ -242,11 +239,11 @@ long Sprite::GetHeight() {
 }
 
 /// Sets the X, Y position to x, and y.
-void Sprite::SetXYPos(long x, long y) {
+void Sprite::SetXYPos(float x, float y) {
 	m_Location.x = x;
 	m_Location.y = y;
-	m_BoundingSphere.center.x = x + m_Width/2;
-	m_BoundingSphere.center.y = y + m_Height/2;
+	m_BoundingSphere.center.x = x + m_Width/2.f;
+	m_BoundingSphere.center.y = y + m_Height/2.f;
 
 }
 
@@ -290,12 +287,12 @@ void Sprite::SetYScale(float Scale) {
 	m_YScale = Scale;
 }
 
-/// Returns the srpite's current AABB.  
+/// Returns the sprite's current AABB.  
 /** This funtion is preferred over GetBoundingRect(). */
 RECT Sprite::GetRect() {
 	RECT dst;
-	dst.top = m_Location.y + m_Velocity.m_y;
-	dst.left = m_Location.x + m_Velocity.m_x;
+	dst.top = (long)(m_Location.y + m_Velocity.y);
+	dst.left = (long)(m_Location.x + m_Velocity.x);
 	dst.bottom = dst.top + m_Height;
 	dst.right = dst.left + m_Width;
 return dst;

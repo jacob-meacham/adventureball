@@ -19,30 +19,30 @@ void PhysicalEntity::Move(float x, float y) { m_BoundingSphere.center.x += x; m_
 
 /// Set the X velocity of this entity.
 void PhysicalEntity::SetXVel(float x) {
-	m_Velocity.m_x = x;
+	m_Velocity.x = x;
 }
 
 /// Set the Y velocity of this entity.
 void PhysicalEntity::SetYVel(float y) {
-	m_Velocity.m_y = y;
+	m_Velocity.y = y;
 }
 
 /// Set the X and Y velocity of this entity.
 void PhysicalEntity::SetXYVel(float x, float y) {
-	m_Velocity.m_x = x;
-	m_Velocity.m_y = y;
+	m_Velocity.x = x;
+	m_Velocity.y = y;
 }
 
 /// Getter to return the X velocity of this entity.
-float PhysicalEntity::GetXVel() { return m_Velocity.m_x; }
+float PhysicalEntity::GetXVel() { return m_Velocity.x; }
 
 /// Getter to return the name of this entity.
-float PhysicalEntity::GetYVel() { return m_Velocity.m_y; }
+float PhysicalEntity::GetYVel() { return m_Velocity.y; }
 
 /// Getter to return the name of this entity.  Pass in 2 floats for the velocity.
 void PhysicalEntity::GetXYVel(float &x, float &y) {
-	x = m_Velocity.m_x;
-	y = m_Velocity.m_y;
+	x = m_Velocity.x;
+	y = m_Velocity.y;
 }
 
 //Checks if this PhysicalEntity is of type e. Returns true if that is the case

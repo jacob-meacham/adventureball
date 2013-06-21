@@ -21,7 +21,7 @@ class Sprite : public PhysicalEntity {
 	protected:
 		long			m_Width; ///< Width of the sprite tile.
 		long			m_Height; ///< Height of the sprite tile.
-		POINT			m_Location;
+		Vector2			m_Location;
 		bool			m_visible;
 		RECT			m_OriginalRect; ///< Original position, width and height of the sprite
 		Tile			*m_Tiles; ///< Pointer to the tile set that this sprite uses
@@ -38,14 +38,9 @@ class Sprite : public PhysicalEntity {
 		int				m_defaultAnimation; 
 		///< Animation that the sprite will return to on an AnimationOption code of GOTO_DEFAULT_ANIMATION.
 
-
-
-		
-
 	public:
 		
 		/// enum for animation control codes.
-
 		enum AnimationOption
 	{
 		LOOP_ANIMATION = 200, ///< returns to the first frame of animation.  Loops infinitely.
@@ -74,16 +69,15 @@ class Sprite : public PhysicalEntity {
 		char GetTextureNum();
 
 		// Creates a renderable sprite.
-		void Create(char TileNum, std::string name, long Xpos, long Ypos);
+		void Create(char TileNum, std::string name, float Xpos, float Ypos);
 
 		virtual void Collide(PhysicalEntity *other);
 
-		//Checks if this Sprite is an entity of type e. Will return false on all types except WALL.
+		// Checks if this Sprite is an entity of type e. Will return false on all types except WALL.
 		virtual bool checkType(EntityType e);
 		
-		
 		// Creates a new animation sequence.
-		bool CreateAnimationSequence(int animationNumber, int startFrame, int numFrames, AnimationOption nOption);
+		bool CreateAnimationSequence(int animationNumber, u32 startFrame, u32 numFrames, AnimationOption nOption);
 		
 		// Sets the current animation of the sprite.
 		bool SetAnimation(int animationNumber);
@@ -102,7 +96,7 @@ class Sprite : public PhysicalEntity {
 		void SetDefaultAnimation(int animationNumber);
 		void SetXScale(float Scale);
 		void SetYScale(float Scale);
-		void SetXYPos(long x, long y);
+		void SetXYPos(float x, float y);
 		void SetAutoAnimate(bool autoA);	
 		void SetVisible(bool v);
 
@@ -110,8 +104,8 @@ class Sprite : public PhysicalEntity {
 
 		// Getters.		
 		int GetDefaultAnimation();
-		long GetXPos();
-		long GetYPos();
+		float GetXPos();
+		float GetYPos();
 		long GetWidth();
 		long GetHeight();
 		float GetXScale();

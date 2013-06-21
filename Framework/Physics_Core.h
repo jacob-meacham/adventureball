@@ -33,9 +33,7 @@ class PhysicalEntity {
 		/** SpriteMovement is a 2-d vector detailing the velocity of the sprite in
 			the x and y direction.
 		*/
-		struct Velocity {
-			float m_x, m_y;
-		} m_Velocity;
+		Vector2 m_Velocity;
 
 	public:
 		
