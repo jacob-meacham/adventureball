@@ -15,14 +15,16 @@ void Player::AddItem(Items item) {
 
 //Sets the location'th item to be the active item NOTE: If a location not in the
 //inventory is supplied, the active item will not change.
-void Player::SetActiveItem(int location) {
-	if(location >= 0 && location < m_inventory.size())
+void Player::SetActiveItem(u32 location) {
+	if(location < m_inventory.size())
 		m_activeItem = (Items)location;
 }
 
 //The next item in the inventory is set as the active item
-void Player::SetNextActiveItem() { 
-	m_activeItem = (Items)(((int)m_activeItem)+1);
-	if(m_activeItem >= m_inventory.size())
-		m_activeItem = (Items)0;
+void Player::SetNextActiveItem() {
+	u32 next_item = (u32)m_activeItem+1;
+	if(next_item >= m_inventory.size())
+		next_item = 0;
+
+	m_activeItem = (Items)next_item;
 }

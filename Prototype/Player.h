@@ -29,7 +29,7 @@ class Player {
 		//Set:
 		//Sets the input value as the active item as chosen as the ith item in the inventory. NOTE: If a location not 
 		//in the inventory is supplied, the active item will not change.
-		void SetActiveItem(int location);
+		void SetActiveItem(u32 location);
 		void SetNextActiveItem(); //The next item in the inventory is set as the active item
 
 		//Get:
