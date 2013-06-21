@@ -1,0 +1,22 @@
+<Definition>
+	<DataSet id="TemplateTest">
+		<int id="TemplateIntProp">10</int>
+	</DataSet>
+	<DataSet id="Sample">
+		<string id="TemplateName">TemplateTest</string>
+		<int id="IntProp">5</int>
+		<float id="FloatProp1">3.4</float>
+		<float id="FloatProp2">6.6</float>
+		<DataSet id="ChildSet">
+			<string id="Don't find me">I should not be in the definition!!</string>
+			<string id="StringProp">There is another prop called string prop, but it found me instead!</string>
+			<DataSet id="Child2">
+				<string id="Child2">I'm the second child's string!</string>
+			</DataSet>
+		</DataSet>
+		<string id="StringProp">I'm a string!</string>
+	</DataSet>
+	<DataSet id="Sample2">
+		<string id="StringProp">I'm another StringProp in a different DataSet!</string>
+	</DataSet>
+</Definition>

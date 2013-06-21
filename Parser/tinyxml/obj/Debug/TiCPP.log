@@ -1,0 +1,19 @@
+﻿Build started 6/20/2013 7:09:01 PM.
+     1>Project "D:\Dev\adventureball\Parser\tinyxml\TiCPP.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "obj/Debug\TiCPP.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1151,5): warning MSB8012: TargetPath(D:\Dev\adventureball\Parser\tinyxml\../../lib\TiCPP.lib) does not match the Library's OutputFile property value (D:\Dev\adventureball\lib\ticppd.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1153,5): warning MSB8012: TargetName(TiCPP) does not match the Library's OutputFile property value (ticppd). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+       Lib:
+         All outputs are up-to-date.
+         TiCPP.vcxproj -> D:\Dev\adventureball\Parser\tinyxml\../../lib\TiCPP.lib
+       FinalizeBuildStatus:
+         Deleting file "obj/Debug\TiCPP.unsuccessfulbuild".
+         Touching "obj/Debug\TiCPP.lastbuildstate".
+     1>Done Building Project "D:\Dev\adventureball\Parser\tinyxml\TiCPP.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.06

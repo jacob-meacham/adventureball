@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Engine Core">
+      <UniqueIdentifier>{d0d905d2-caac-4db2-9f32-5009bcabe61e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Core\Header Files">
+      <UniqueIdentifier>{d6ce8363-c1bc-4156-b1e9-53c92c0b3e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{36f27ae4-49f1-4ba7-9f86-7e0c561a33e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Header Files">
+      <UniqueIdentifier>{e035c7d0-31b8-4ed5-b7de-84b77ac99bb4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DataSet.cpp">
+      <Filter>Engine Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsDevice.cpp">
+      <Filter>Engine Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics_Core.cpp">
+      <Filter>Engine Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Engine Core</Filter>
+    </ClCompile>
+    <ClCompile Include="System.cpp">
+      <Filter>Engine Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Engine Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiButton.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiComponent.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiMgr.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiStatic.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiTexture.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiInput.cpp">
+      <Filter>GUI\Header Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DataSet.h">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUtil.h">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsDevice.h">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics_Core.h">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Engine Core\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiButton.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiCommon.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiComponent.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiInput.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiMgr.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiScreen.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiStatic.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiTexture.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiWindow.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

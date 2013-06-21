@@ -1,0 +1,12 @@
+*.sdf
+*.suo
+*.user
+*.ncb
+*.opensdf
+Prototype/Debug/
+Prototype/Release/
+tinyxml/obj/Debug/
+tinyxml/obj/Release/
+ipch/
+Framework/Debug/
+Framework/Release
